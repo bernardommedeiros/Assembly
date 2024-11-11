@@ -14,3 +14,5 @@ inc:
 	#incremento
 	addi $(, $9, 1 # i <- i+1
 	j test
+
+fimfor:
