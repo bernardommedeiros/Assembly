@@ -16,3 +16,8 @@ inc:
 	j test
 
 fimfor:
+
+
+jal - jump and link -> endereço do que estiver abaixo da instrução jal
+
+jr -> jump register -> pula pro registrador endereçado 
