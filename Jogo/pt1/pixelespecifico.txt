@@ -1,0 +1,1 @@
+512 x linha /4 (primeiro pixel da esquerda) [+4 a cada coluna para direita]
