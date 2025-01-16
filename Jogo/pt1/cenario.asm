@@ -36,29 +36,29 @@ fimPiso:
     li $12, 14336           # Inicia o contador com 14336
     lui $8, 0x1001          # Carrega a parte superior do endereço base
     addi $8, $8, 14336      # Ajusta $8 para o valor 0x10010000 + 14336
-    li $9, 0x5C4033         # Carrega o valor da cor preta (0x000000)
+    li $9, 0x5C4033        
 
-forLoop:
+forMuro:
 
-    beq $12, 15488, fimLoop  # Se $12 == 18429, sai do loop (quando chegar ao pixel 18428)
-    sw $9, 0($8)             # Armazena a cor preta no endereço de memória apontado por $8
-    addi $8, $8, 4           # Avança o ponteiro para o próximo endereço
-    addi $12, $12, 1         # Incrementa o contador
-    j forLoop                # Volta ao início do loop
+    beq $12, 15488, fimMuro 
+    sw $9, 0($8)       
+    addi $8, $8, 4
+    addi $12, $12, 1        
+    j forMuro              
 
-fimLoop:
+fimMuro:
     lui $8, 0x1001
-    li $12, 16384           # Inicia o contador com 14336
-    lui $8, 0x1001          # Carrega a parte superior do endereço base
-    addi $8, $8, 16384      # Ajusta $8 para o valor 0x10010000 + 14336
-    li $9, 0x000000         # Carrega o valor da cor preta (0x000000)
+    li $12, 16384           
+    lui $8, 0x1001          
+    addi $8, $8, 16384      
+    li $9, 0x000000        
 	
 forDetalhe:
     beq $12, 16512 , fimDetalhe
     sw $13, 0($8)
-    addi $8, $8, 4           # Avança o ponteiro para o próximo endereço
-    addi $12, $12, 1         # Incrementa o contador
-    j forDetalhe             # Volta ao início do loop]
+    addi $8, $8, 4           
+    addi $12, $12, 1        
+    j forDetalhe            
     
 fimDetalhe:
 	lui $8, 0x1001
@@ -83,7 +83,6 @@ Janela:
 	sw $15, 6448($8)
 	sw $15, 5936($8)
 	
-	
 	sw $15, 14124($8)
 	sw $15, 13612($8)
 	sw $15, 13100($8)
@@ -100,8 +99,6 @@ Janela:
 	sw $15, 7468($8)
 	sw $15, 6956($8)
 	sw $15, 6444($8)
-	
-	
 	
 	sw $15, 13108($8)
 	sw $15, 12596($8)
@@ -144,13 +141,6 @@ Janela:
 	sw $15, 5444($8)
 
 	sw $15, 4932($8)
-	
-	
-
-	
-	
-	
-	
 	
 	sw $15, 4424($8)
 	sw $15, 4428($8)
@@ -216,9 +206,6 @@ Janela:
 	sw $15, 7060($8)
 	sw $15, 6548($8)
 	
-	
-	
-	
 	sw $15, 13200($8)
 	sw $15, 12688($8)
 	sw $15, 12176($8)
@@ -235,7 +222,6 @@ Janela:
 	sw $15, 6544($8)
 	sw $15, 6032($8)
 	sw $15, 6036($8)
-	
 	
 	sw $15, 14232($8)
 	sw $15, 13720($8)
@@ -278,17 +264,8 @@ Janela:
 	sw $15, 13728($8)
 	sw $15, 13216($8)
 	sw $15, 14236($8)
-	
-	#detalhe dentro
-	
-
-	
-	
-	
-	
-	#tiras
-	#meio
-	sw $15, 9056($8)
+#meio
+sw $15, 9056($8)
 sw $15, 8544($8)
 sw $15, 8032($8)
 sw $15, 7520($8)
@@ -333,6 +310,7 @@ sw $15, 12644($8)
 sw $15, 13156($8)
 sw $15, 13668($8)
 sw $15, 14180($8)
+
 #direita
 sw $15, 9080($8)
 sw $15, 8568($8)
@@ -376,10 +354,6 @@ sw $15, 13188($8)
 sw $15, 13700($8)
 sw $15, 14212($8)
 
-
-
-
-
 #esquerda
 sw $15, 9036($8)
 sw $15, 8524($8)
@@ -403,9 +377,6 @@ sw $15, 13132($8)
 sw $15, 13644($8)
 sw $15, 14156($8)
 sw $15, 14668($8)
-
-
-
 
 sw $15, 9024($8)
 sw $15, 8512($8)
@@ -447,8 +418,6 @@ sw $15, 12680($8)
 sw $15, 12684($8)
 sw $15, 12604($8)
 sw $15, 12600($8)
-
-
 
 sw $15, 10040($8)
 sw $15, 10044($8)
@@ -584,7 +553,6 @@ sw $14, 13196($8)
 sw $14, 13708($8)
 sw $14, 14220($8)
 
-
 sw $14, 13712($8)
 sw $14, 14224($8)
 
@@ -656,7 +624,6 @@ sw $14, 11632($8)
 sw $14, 11636($8)
 sw $14, 12144($8)
 sw $14, 12148($8)
-
 
 sw $14, 12156($8)
 sw $14, 10624($8)
@@ -801,7 +768,6 @@ sw $14, 4980($8)
 sw $14, 5492($8)
 sw $14, 4988($8)
 sw $14, 5500($8)
- 
 
 fim:
     addi $2, $0, 10
