@@ -9,9 +9,12 @@ main:
     addi $13, $0, 0x000000 #detalhe muro
     addi $14, $0, 0xe5bc43 #luz janela
     addi $15, $0, 0x5C4033 #janela 
+    addi $17, $0, 0xFFFFF0  #parede
+    
 forFundo: 
     beq $0, $11, fimFundo  
-    sw $9, 0($8)           
+    sw $9, 0($8)    #repete junto ao lw
+    sw $9, 32768 ($8)  #offset     
     addi $8, $8, 4         
     sub $11, $11, 1         
     j forFundo              
@@ -24,7 +27,7 @@ fimFundo:
     
 forPiso:
     beq $0, $11, fimPiso    
-    sw $10, 0($8)           
+    sw $10, 2560($8)          
     addi $8, $8, 4          
     sub $11, $11, 1        
     j forPiso  
@@ -34,7 +37,7 @@ fimPiso:
     addi $8, $8, 65532    
     sub $11, $0, $8  
     li $12, 14336           # Inicia o contador com 14336
-    lui $8, 0x1001          # Carrega a parte superior do endereço base
+    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÂ§o base
     addi $8, $8, 14336      # Ajusta $8 para o valor 0x10010000 + 14336
     li $9, 0x5C4033        
 
@@ -265,8 +268,8 @@ Janela:
 	sw $15, 13216($8)
 	sw $15, 14236($8)
 #meio
-sw $15, 9056($8)
-sw $15, 8544($8)
+	sw $15, 9056($8)
+	sw $15, 8544($8)
 sw $15, 8032($8)
 sw $15, 7520($8)
 sw $15, 7008($8)
@@ -479,16 +482,12 @@ sw $14, 14132($8)
 sw $14, 14136($8)
 sw $14, 14140($8)
 
-
-
 sw $14, 13124($8)
 sw $14, 13636($8)
 sw $14, 14148($8)
 sw $14, 13128($8)
 sw $14, 13640($8)
 sw $14, 14152($8)
-
-
 
 sw $14, 13136($8)
 sw $14, 13648($8)
@@ -768,6 +767,39 @@ sw $14, 4980($8)
 sw $14, 5492($8)
 sw $14, 4988($8)
 sw $14, 5500($8)
+
+#################################################  NPC  #################################################################
+	addi $17, $0, 0xFFFFF0  #parede
+ 	addi $16, $0, 0xA020F0 #npc
+	addi $25, $0, 0x90ee90  #principal - mike
+	addi $24, $0, 0x000000  #principal - mike
+teste:
+	#26624 ultima linha branca - linha 52
+	sw $16, 26624($8)
+	jal timer   
+	lw $9, 32768($8)
+	sw $17, 26624($8) 
+	lw $9, 32768($8)
+	sw $24, 27136($8) 
+        addi $8, $8, 4
+        j teste
+
+	
+timer: sw $16, 0($29)
+       addi $29, $29, -4
+       addi $16, $0, 100000
+forT:  beq $16, $0, fimT
+       nop
+       nop
+       addi $16, $16, -1      
+       j forT                  
+fimT:  addi $29, $29, 4                                                    
+       lw $16, 0($29)          
+       jr $31
+
+
+
+
 
 fim:
     addi $2, $0, 10
