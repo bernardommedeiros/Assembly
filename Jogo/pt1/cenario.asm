@@ -1,70 +1,100 @@
-.data
 .text
-main: 
-    lui $8, 0x1001         
+
+main:
+    # cenario da tela
+    jal criarCenario
+    
+    # copia do cenario
+    addi $4, $0, 32768
+    jal criarCenario
+    
+    jal criarNpc
+    j fim
+    
+
+criarCenario: 
+    lui $8, 0x1001
+    add $8, $8, $4
+                  
     addi $9, $0, 0xFFFFF0  #parede 
     addi $10, $0, 0xc57d56  #piso
-    addi $11, $0, 8192 #contador
     addi $12, $0, 0x5C4033 #muro 
     addi $13, $0, 0x000000 #detalhe muro
     addi $14, $0, 0xe5bc43 #luz janela
     addi $15, $0, 0x5C4033 #janela 
     addi $17, $0, 0xFFFFF0  #parede
     
+    addi $11, $0, 8192 #contador
 forFundo: 
     beq $0, $11, fimFundo  
-    sw $9, 0($8)    #repete junto ao lw
-    sw $9, 32768 ($8)  #offset     
-    addi $8, $8, 4         
+    
+    sw $9, 0($8)    #repete junto ao lw 
+    addi $8, $8, 4
+             
     sub $11, $11, 1         
     j forFundo              
 
 
 fimFundo:
     lui $8, 0x1001
-    addi $8, $8, 24576     
+    add $8, $8, $4
+    addi $8, $8, 24576
+         
     addi $11, $0, 2048   
-    
 forPiso:
-    beq $0, $11, fimPiso    
+    beq $0, $11, fimPiso
+        
     sw $10, 2560($8)          
-    addi $8, $8, 4          
+    addi $8, $8, 4
+             
     sub $11, $11, 1        
     j forPiso  
 	
 fimPiso:
     lui $8, 0x1001          
-    addi $8, $8, 65532    
+    add $8, $8, $4
+    
     sub $11, $0, $8  
     li $12, 14336           # Inicia o contador com 14336
-    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÂ§o base
+    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÆ’Ã‚Â§o base
+    add $8, $8, $4
     addi $8, $8, 14336      # Ajusta $8 para o valor 0x10010000 + 14336
     li $9, 0x5C4033        
 
 forMuro:
 
     beq $12, 15488, fimMuro 
+    
     sw $9, 0($8)       
     addi $8, $8, 4
+    
     addi $12, $12, 1        
     j forMuro              
 
 fimMuro:
     lui $8, 0x1001
-    li $12, 16384           
-    lui $8, 0x1001          
-    addi $8, $8, 16384      
+    add $8, $8, $4
+    
+    li $12, 16384
+         
+    lui $8, 0x1001         
+    addi $8, $8, 16384
+    add $8, $8, $4
+          
     li $9, 0x000000        
 	
 forDetalhe:
     beq $12, 16512 , fimDetalhe
+    
     sw $13, 0($8)
-    addi $8, $8, 4           
+    addi $8, $8, 4
+            
     addi $12, $12, 1        
     j forDetalhe            
     
 fimDetalhe:
 	lui $8, 0x1001
+	add $8, $8, $4
 	
 Janela:
 	#lateral esquerda
@@ -768,19 +798,27 @@ sw $14, 5492($8)
 sw $14, 4988($8)
 sw $14, 5500($8)
 
+jr $31
+
 #################################################  NPC  #################################################################
-	addi $17, $0, 0xFFFFF0  #parede
+criarNpc:
  	addi $16, $0, 0xA020F0 #npc
 	addi $25, $0, 0x90ee90  #principal - mike
 	addi $24, $0, 0x000000  #principal - mike
+	
+	addi $8, $8, -5120 # pos inicial
 teste:
-	#26624 ultima linha branca - linha 52
-	sw $16, 26624($8)
-	jal timer   
-	lw $9, 32768($8)
-	sw $17, 26624($8) 
-	lw $9, 32768($8)
-	sw $24, 27136($8) 
+	sw $16, 0($8)
+	jal timer
+	
+	# recuperando o fundo
+	lui $17, 0x1001
+	add $17, $17, $8
+	addi $17, $17, 32768
+	lw $18, 0($17)
+	
+	sw $18, 0($8)
+
         addi $8, $8, 4
         j teste
 
