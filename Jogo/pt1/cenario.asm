@@ -11,7 +11,7 @@ main:
     jal criarNpc
     j fim
     
-
+# $4 -> canto superior esquerdo do cenario
 criarCenario: 
     lui $8, 0x1001
     add $8, $8, $4
@@ -56,7 +56,7 @@ fimPiso:
     
     sub $11, $0, $8  
     li $12, 14336           # Inicia o contador com 14336
-    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÆ’Ã‚Â§o base
+    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o base
     add $8, $8, $4
     addi $8, $8, 14336      # Ajusta $8 para o valor 0x10010000 + 14336
     li $9, 0x5C4033        
@@ -806,17 +806,17 @@ criarNpc:
 	addi $25, $0, 0x90ee90  #principal - mike
 	addi $24, $0, 0x000000  #principal - mike
 	
-	addi $8, $8, -5120 # pos inicial
+	lui $8, 0x1001
+	addi $8, $8, 28160 # pos inicial
 teste:
 	sw $16, 0($8)
 	jal timer
 	
 	# recuperando o fundo
-	lui $17, 0x1001
-	add $17, $17, $8
-	addi $17, $17, 32768
+	add $17, $8, 32768
+	# pega a cor que esta no $17
 	lw $18, 0($17)
-	
+	# pinta o endereço antigo do personagem
 	sw $18, 0($8)
 
         addi $8, $8, 4
