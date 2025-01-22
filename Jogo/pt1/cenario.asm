@@ -804,23 +804,26 @@ jr $31
 criarNpc:
  	addi $16, $0, 0xA020F0 #npc
 	addi $25, $0, 0x90ee90  #principal - mike
-	addi $24, $0, 0x000000  #principal - mike
 	
 	lui $8, 0x1001
 	addi $8, $8, 28160 # pos inicial
-teste:
-	sw $16, 0($8)
-	jal timer
+designNpc:
+	sw $16, 8($8)
 	
+	jal timer
+forEnder:	
+	#beq da ponta da borda, lui 0x1001 0 e vai interando 512 ate chegar na borda do personagem para ser a cpmdição de parada e o npc prar
 	# recuperando o fundo
 	add $17, $8, 32768
 	# pega a cor que esta no $17
 	lw $18, 0($17)
+	
 	# pinta o endereço antigo do personagem
-	sw $18, 0($8)
+	sw $18, 8($8)
 
-        addi $8, $8, 4
-        j teste
+	
+   
+        j designNpc
 
 	
 timer: sw $16, 0($29)
