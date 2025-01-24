@@ -4,6 +4,7 @@ criarNpc:
 	ori $14, $0, 0xf85da6 #npc - rosa antena
         ori $15, $0, 0x3D2F58 #npc - detalhes escuros
  	ori $16, $0, 0x674E9A #npc - corpo
+ 	ori $17, $0, 0x383A62  #npc - cauda
 	ori $22, $0, 0x775BAD#npc - corpo dentro
 	ori $23, $0, 0xD8D8D8#npc - sorriso
 	ori $24, $0, 0x674E9A#npc - palpebras	
@@ -12,7 +13,7 @@ criarNpc:
 	lui $8, 0x1001
 	addi $8, $8, 28160 # pos inicial
 designNpc:
-#pé esquerdo
+#pÃ© esquerdo
 	sw $16, 0($8)
 	sw $16, 4($8)
 	sw $16, 8($8)
@@ -51,7 +52,7 @@ designNpc:
 	sw $15, -2024($8)
 	sw $15, -2020($8)
 	
-	#pé direito
+	#pÃ© direito
 sw $15, 52($8)
 sw $15, 56($8)
 sw $15, -460($8)
@@ -117,7 +118,7 @@ sw $22, -2528($8) #abertura
 sw $22, -2524($8)
 sw $22, -2520($8)
 sw $22, -2516($8)
-sw $22, -2512($8) #começo abertura
+sw $22, -2512($8) #comeÃ§o abertura
 
 #detalhe lateral direito
 sw $16, -2508($8)
@@ -189,7 +190,8 @@ sw $16, -9188($8)
 sw $16, -9700($8)
 sw $16, -10212($8)
 sw $16, -10724($8)
-#braço esq
+
+#braco esq superior - diferenca 4096
 sw $16, -10732($8)
 sw $16, -10220($8)
 sw $16, -10224($8)
@@ -203,6 +205,62 @@ sw $16, -9208($8)
 
 sw $16, -8696($8)
 sw $15, -8692($8)
+#braco esq inferior
+sw $16, -6636($8)
+sw $16, -6124($8)
+sw $16, -6128($8)
+sw $16, -5616($8)
+sw $16, -5620($8)
+sw $16, -5108($8)
+sw $16, -5112($8)
+sw $16, -4600($8)
+sw $15, -4596($8)
+
+#braço superior direito
+sw $16, -10692($8)
+sw $16, -10180($8)
+sw $16, -10176($8)
+sw $16, -9664($8)
+
+sw $16, -9660($8)#97160
+sw $16, -9148($8)#97160
+sw $16, -9144($8)#97160
+sw $15, -8636($8)#97160
+sw $16, -8632($8)#97160
+#braco inferior direito
+sw $16, -6596($8)
+sw $16, -6084($8)
+sw $16, -6080($8)
+sw $16, -5568($8)
+sw $16, -5564($8)
+sw $16, -5052($8)
+sw $16, -5048($8)
+sw $15, -4540($8)
+sw $16, -4536($8)
+
+#cauda
+
+#primeira linha
+sw $17, -2500($8)
+sw $17, -2496($8)
+#2 linha
+sw $17, -3012($8)
+sw $17, -3008($8)
+sw $17, -3004($8)
+#3 linha
+sw $17, -3520($8)
+sw $17, -3516($8)
+sw $17, -3512($8)
+#4 linha
+sw $17, -4028($8)
+sw $17, -4024($8)
+sw $17, -4020($8)
+#5 linha - 1 linha da pata
+sw $17, -4532($8)
+sw $17, -4524($8)
+
+
+
 ################
 sw $22, -3040($8)  
 sw $22, -3036($8)  
@@ -315,7 +373,7 @@ sw $22, -11736($8)
 sw $22, -11732($8)
 sw $22, -11728($8)
 
-#cabeça
+#cabeÃ§a
 sw $22, -11748($8)
 sw $22, -11724($8)
 #sorriso e em volta
@@ -340,7 +398,7 @@ sw $23, -12736($8)
 sw $24, -12732($8)
 
 
-#continuação rosto
+#continuaÃ§Ã£o rosto
 
 sw $24, -12780($8)
 sw $24, -12776($8)
