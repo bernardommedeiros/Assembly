@@ -7,22 +7,24 @@ main:
     addi $4, $0, 32768
     jal criarCenario
     
+    addi $4, $0, 0
     jal criarNpc
-    addi $20, $0, 32168
 forLoop:
-    add $4, $0, $20
+    add $4, $25, 30632
     jal forRestaurar
     
-    addi $20, $20, -4
-    add $4, $0, $20
+    addi $25, $25, -4
+    add $4, $0, $25
     jal criarNpc
+    
+    
     jal timer
     j forLoop
     
  
 timer: sw $16, 0($29)
        addi $29, $29, -4
-       addi $16, $0, 100000
+       addi $16, $0, 50000
 forT:  beq $16, $0, fimT
        nop
        nop
