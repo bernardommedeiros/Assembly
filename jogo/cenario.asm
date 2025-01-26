@@ -47,7 +47,7 @@ fimPiso:
     
     sub $11, $0, $8  
     li $12, 14336           # Inicia o contador com 14336
-    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o base
+    lui $8, 0x1001          # Carrega a parte superior do endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o base
     add $8, $8, $4
     addi $8, $8, 14336      # Ajusta $8 para o valor 0x10010000 + 14336
     li $9, 0x5C4033        
