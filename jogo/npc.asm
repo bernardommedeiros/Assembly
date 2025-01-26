@@ -11,10 +11,10 @@ criarNpc:
 
 	
 	lui $8, 0x1001
-	addi $8, $8, 32168 # pos inicial
+	addi $8, $8, 30120 # pos inicial
 	add $8, $8, $4
 designNpc:
-#pÃ© esquerdo
+#pÃƒÂ© esquerdo
 	sw $16, 0($8)
 	sw $16, 4($8)
 	sw $16, 8($8)
@@ -53,7 +53,7 @@ designNpc:
 	sw $15, -2024($8)
 	sw $15, -2020($8)
 	
-	#pÃ© direito
+	#pÃƒÂ© direito
 sw $15, 52($8)
 sw $15, 56($8)
 sw $15, -460($8)
@@ -119,7 +119,7 @@ sw $22, -2528($8) #abertura
 sw $22, -2524($8)
 sw $22, -2520($8)
 sw $22, -2516($8)
-sw $22, -2512($8) #comeÃ§o abertura
+sw $22, -2512($8) #comeÃƒÂ§o abertura
 
 #detalhe lateral direito
 sw $16, -2508($8)
@@ -217,7 +217,7 @@ sw $16, -5112($8)
 sw $16, -4600($8)
 sw $15, -4596($8)
 
-#braço superior direito
+#braÃ§o superior direito
 sw $16, -10692($8)
 sw $16, -10180($8)
 sw $16, -10176($8)
@@ -373,7 +373,7 @@ sw $22, -11736($8)
 sw $22, -11732($8)
 sw $22, -11728($8)
 
-#cabeÃ§a
+#cabeÃƒÂ§a
 sw $22, -11748($8)
 sw $22, -11724($8)
 #sorriso e em volta
@@ -398,7 +398,7 @@ sw $23, -12736($8)
 sw $24, -12732($8)
 
 
-#continuaÃ§Ã£o rosto
+#continuaÃƒÂ§ÃƒÂ£o rosto
 
 sw $24, -12780($8)
 sw $24, -12776($8)
@@ -528,73 +528,96 @@ jr $31
 forRestaurar:
 	sw $31, 0($sp) #stack point 29 - salva o reg 31 na pilha
 	addi $sp, $sp, -4
-	sw $8, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $8, 0($sp) #stack point 29 - salva o reg 8 na pilha
 	addi $sp, $sp, -4
-	sw $9, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $9, 0($sp) #stack point 29 - salva o reg 9 na pilha
 	addi $sp, $sp, -4
-	sw $10, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $10, 0($sp) #stack point 29 - salva o reg 10 na pilha
 	addi $sp, $sp, -4
-	sw $11, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $11, 0($sp) #stack point 29 - salva o reg 11 na pilha
 	addi $sp, $sp, -4
-	sw $12, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $12, 0($sp) #stack point 29 - salva o reg 12 na pilha
 	addi $sp, $sp, -4
-	sw $13, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $13, 0($sp) #stack point 29 - salva o reg 13 na pilha
 	addi $sp, $sp, -4
-	sw $21, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	sw $14, 0($sp) #stack point 29 - salva o reg 14 na pilha
 	addi $sp, $sp, -4
-
+	sw $15, 0($sp) #stack point 29 - salva o reg 15 na pilha
+	addi $sp, $sp, -4
+	sw $21, 0($sp) #stack point 29 - salva o reg 21 na pilha
+	addi $sp, $sp, -4
+#Essas instruções salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) é decrementado para armazenar cada registrador.
 	
 	lui $8, 0x1001
-	add $8, $8, $4 #$4 canto inferior esq do npc
+	add $8, $8, $4 #$4 canto inferior esq do npc # Adiciona o valor de $4 a $8 para definir a posição inicial
+	
 	lui $9 0x1001 #copia
-	add $9, $9, $4
-	addi $9, $9, 32768
+	add $9, $9, $4 # Adiciona o valor de $4 a $9 para definir a posição inicial da cópia
+	addi $9, $9, 32768# Adiciona um offset de 32768 a $9
 	
-	addi $10, $0, 53 #linhas
-	addi $11, $0, 0 #contador - pra cima 
-	addi $12, $0, 20 #contador - para o lado
-	addi $13, $0, 0
+	addi $10, $0, 40 #linhas a serem copiadas
+	addi $11, $0, 0 #contador das linhas - pra cima 
+	addi $12, $0, 24 #numero de pixels para copiar em cada linha
+	addi $13, $0, 0 #contador de pixels - para o lado
 	
-forColuna:
-	beq $11, $10, retornoRest
+forColuna: #percorre as linhas, copiando colunas de pixels de uma região de memória para outra.
+
+	beq $11, $10, retornoRest # Se $11 (contador de linhas) alcançar $10, sai do loop
 	
-	forLinha: 
-	beq $12, $13, prxColuna
-	lw $21, 0($9)
-	sw $21, 0($8)
+	add $14, $0, $8 # Guarda o endereço inicial de $8 em $14
+	add $15, $0, $9 # Guarda o endereço inicial de $9 em $15
+	forLinha:  #percorre os pixels em cada linha, copiando-os de um endereço para outro.
+	beq $12, $13, prxColuna  # Se $13 (contador de pixels) alcançar $12, vai para a próxima coluna
+	lw $21, 0($9) # Carrega o pixel do endereço $9 para $21
 	
-	addi $8, $8, 4 #aponta para o prx pixel
-	addi $9, $9, 4 #aponta para o prx pixel da copia
+	sw $21, 0($8) # Armazena o pixel do $21 no endereço $8
 	
-	addi $13, $13, 1
+	addi $8, $8, 4 #Avança para o próximo pixel em $8
+	addi $9, $9, 4 #Avança para o próximo pixel em $9 (copia)
+	
+	addi $13, $13, 1 # Incrementa o contador de pixels
 	
 	j forLinha
 	
-prxColuna:
-	addi $13, $0, 0
-	addi $9, $9, -592 #
-	addi $8, $8, -592 
-	addi $11, $11, 1
+prxColuna: #Ajusta os endereços para a próxima linha e reseta o contador de pixels
+	addi $13, $0, 0 # Reseta o contador de pixels
+	addi $9, $15, -512 # Ajusta o endereço de $9 para a próxima linha
+	addi $8, $14, -512 # Ajusta o endereço de $8 para a próxima linha
+	addi $11, $11, 1 #Incrementa o contador de linhas
 	
 	j forColuna
-retornoRest:
+retornoRest: #Essas instruções restauram os registradores da pilha e retornam ao endereço salvo em $31.
 	add $sp, $sp, 4
 	lw $21, 0($sp)
+	
+	add $sp, $sp, 4
+	lw $15, 0($sp)
+	
+	add $sp, $sp, 4
+	lw $14, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $13, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $12, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $11, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $10, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $9, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $8, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $31, 0($sp)
 	jr $31
+	
 fim:	
        addi $2, $0, 10
 	syscall
